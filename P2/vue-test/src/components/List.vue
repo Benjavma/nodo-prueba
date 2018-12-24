@@ -21,6 +21,7 @@
 
 <script>
   import { listsAllCharacters } from '../services/got.service.js'
+  import { router } from '../main'
 
   export default {
     name: 'list-component',
@@ -31,6 +32,7 @@
     data () {
       return {
         characters: [],
+        search:'',
         isLoading: false
       }
     },
@@ -47,6 +49,14 @@
         })
     },
 
+    computed: {
+      personajesFiltrados:function(){
+        return this.characters.filter( character => {
+          return character.name.toLowerCase().match(this.search.toLowerCase())
+        })
+      }
+    },
+
     /**
      * @description the methods block represents all the local methods of this component.
      */
@@ -59,6 +69,7 @@
        */
       goToDetail(id) {
         // CODE HERE
+        router.push({ name: "detail", params: { id: id } })
       }
     }
   }
